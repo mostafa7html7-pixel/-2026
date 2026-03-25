@@ -32,6 +32,14 @@ window.playInitialVideo = function() {
     const slider = document.getElementById('intro-slider');
     if(slider) slider.style.display = 'none';
     
+    // إظهار مشغل يوتيوب
+    const playerContainer = document.getElementById('yt-player-container');
+    if(playerContainer) playerContainer.style.display = 'block';
+    
+    // تحديث زر غلق الفيديو
+    const closeBtn = document.getElementById('close-video-btn');
+    if(closeBtn) closeBtn.style.display = 'inline-flex';
+    
     if (ytPlayer && ytPlayer.playVideo) {
         ytPlayer.playVideo();
     }
@@ -106,16 +114,12 @@ function updateVideoInfo() {
         // تحديث الكاتب/المعلم
         const authorElem = document.getElementById('info-author');
         if (videoData && videoData.author && authorElem) {
-            authorElem.style.display = 'block';
             authorElem.innerHTML = `<i class="fa-solid fa-user-tie"></i> ${videoData.author}`;
-        } else if (authorElem) {
-            authorElem.style.display = 'none';
         }
         
         // تحديث مدة الفيديو
         const durationElem = document.getElementById('info-duration');
         if (duration && durationElem) {
-            durationElem.style.display = 'block';
             const h = Math.floor(duration / 3600);
             const m = Math.floor((duration % 3600) / 60);
             const s = Math.floor(duration % 60).toString().padStart(2, '0');
@@ -127,8 +131,6 @@ function updateVideoInfo() {
                 timeString = `${m}:${s}`;
             }
             durationElem.innerHTML = `<i class="fa-regular fa-clock"></i> ${timeString} دقيقة`;
-        } else if (durationElem) {
-            durationElem.style.display = 'none';
         }
     } catch(e) {
         console.log("Waiting for player data...");
@@ -137,6 +139,16 @@ function updateVideoInfo() {
 
 // دالة تفاعلية لتغيير الفيديو من القائمة
 window.changeVideo = function(videoId, title, description, element) {
+    // حفظ تقدم الفيديو الحالي قبل التبديل
+    if (lastLoadedVideoId && ytPlayer && ytPlayer.getCurrentTime) {
+        try {
+            let currentTime = ytPlayer.getCurrentTime();
+            if (currentTime > 2) {
+                localStorage.setItem('vid_progress_' + lastLoadedVideoId, currentTime);
+            }
+        } catch(e) {}
+    }
+    
     lastLoadedVideoId = videoId;
     
     // تحديث شريط يٌعرض الآن
@@ -145,7 +157,13 @@ window.changeVideo = function(videoId, title, description, element) {
 
     // تحديث العناوين في الواجهة
     document.getElementById('info-title').innerText = title;
-    document.getElementById('info-desc').innerText = description;
+    
+    // معالجة الوصف لو كان يحتوي على تاجات أو معلومات إضافية
+    const tagsElem = document.getElementById('info-tags');
+    if (tagsElem && description) {
+        // لو الوصف طويل أو يحتوي على فواصل، يمكن تقسيمه لتاجات أو عرضه كنص
+        tagsElem.innerHTML = `<span class="tag-text">${description}</span>`;
+    }
     
     // تغيير التنشيط في القائمة
     document.querySelectorAll('.lesson-item').forEach(item => item.classList.remove('active'));
@@ -224,21 +242,87 @@ window.backToSubjects = function() {
     document.getElementById('back-to-subjects').style.display = 'none';
 };
 
-// طي وفتح قائمة المواد
+// طي وفتح قائمة المواد مع تحسين الموبايل
 window.togglePlaylistCompact = function() {
     const container = document.querySelector('.app-container');
     const isClosed = container.classList.toggle('playlist-closed');
     
-    // تحديث نص الزر بناءً على الحالة الجديدة
+    // تحديث نص الزر الداخلي
     const btnSpan = document.querySelector('#smart-toggle-btn span');
+    const btnIcon = document.querySelector('#smart-toggle-btn i');
     if (btnSpan) {
         if (isClosed) {
             btnSpan.innerText = 'إظهار قائمة المواد والدروس';
+            if (btnIcon) btnIcon.className = 'fa-solid fa-layer-group';
         } else {
             btnSpan.innerText = 'إخفاء قائمة المواد والدروس';
+            if (btnIcon) btnIcon.className = 'fa-solid fa-xmark';
         }
     }
+    
+    // تحديث زر الموبايل العائم (FAB)
+    const fab = document.getElementById('mobile-fab');
+    if (fab) {
+        const fabSpan = fab.querySelector('span');
+        const fabIcon = fab.querySelector('i');
+        if (isClosed) {
+            if (fabSpan) fabSpan.innerText = 'تصفح المواد والدروس';
+            if (fabIcon) fabIcon.className = 'fa-solid fa-layer-group';
+            fab.classList.remove('fab-hidden');
+        } else {
+            if (fabSpan) fabSpan.innerText = 'إغلاق القائمة';
+            if (fabIcon) fabIcon.className = 'fa-solid fa-xmark';
+        }
+    }
+    
+    // تحسين تجربة الموبايل: النزول تلقائياً للقائمة عند فتحها
+    if (!isClosed && window.innerWidth <= 900) {
+        setTimeout(() => {
+            const playlist = document.querySelector('.playlist-section');
+            if (playlist) {
+                playlist.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 350); // تأخير مناسب لانتهاء الانيميشن
+    }
 };
+
+// تبديل الخطوط ديناميكياً
+window.changeFont = function(fontClass) {
+    const fonts = ['font-reem-kufi', 'font-cairo', 'font-almarai', 'font-tajawal', 'font-readex-pro'];
+    // إضافة الكلاس الجديد وحذف القديم
+    fonts.forEach(f => document.body.classList.remove(f));
+    document.body.classList.add(fontClass);
+    
+    // حفظ التفضيل
+    localStorage.setItem('abqareeno_font_2026', fontClass);
+    
+    // تحديث الحالة النشطة في القائمة
+    document.querySelectorAll('.font-option').forEach(opt => {
+        opt.classList.toggle('active', opt.getAttribute('onclick').includes(fontClass));
+    });
+};
+
+// فتح/إغلاق قائمة الخطوط
+window.toggleFontMenu = function() {
+    const menu = document.getElementById('font-menu');
+    menu.classList.toggle('show');
+};
+
+// معالجة اختيار الخط وإغلاق القائمة
+window.handleFontChange = function(fontClass, element) {
+    changeFont(fontClass);
+    const menu = document.getElementById('font-menu');
+    menu.classList.remove('show');
+};
+
+// إغلاق القوائم عند الضغط خارجها
+document.addEventListener('click', (e) => {
+    const fontMenu = document.getElementById('font-menu');
+    const fontBtn = document.getElementById('font-btn');
+    if (fontMenu && fontBtn && !fontMenu.contains(e.target) && !fontBtn.contains(e.target)) {
+        fontMenu.classList.remove('show');
+    }
+});
 
 // تبديل الوضع الداكن والفاتح
 window.toggleTheme = function() {
@@ -262,10 +346,76 @@ window.toggleTheme = function() {
     }
 };
 
-// استعادة الوضع عند التحميل وبدء السلايدر
+// إغلاق الفيديو وإرجاع السلايدر
+window.closeVideo = function() {
+    // إيقاف الفيديو
+    if (ytPlayer && ytPlayer.pauseVideo) {
+        ytPlayer.pauseVideo();
+    }
+    
+    // إخفاء مشغل يوتيوب وإظهار السلايدر
+    const playerContainer = document.getElementById('yt-player-container');
+    if(playerContainer) playerContainer.style.display = 'none';
+    
+    const slider = document.getElementById('intro-slider');
+    if(slider) {
+        slider.style.display = 'block';
+        startSlider();
+    }
+    
+    // تحديث الزر ليصبح "شغل الفيديو"
+    const closeBtn = document.getElementById('close-video-btn');
+    if(closeBtn) {
+        closeBtn.innerHTML = '<i class="fa-solid fa-circle-play"></i> شغل الفيديو';
+        closeBtn.onclick = reopenVideo;
+    }
+    
+    // تحديث شريط يُعرض الآن
+    const nowPlayingText = document.getElementById('now-playing-text');
+    if(nowPlayingText) nowPlayingText.innerText = 'عرض الصور';
+};
+
+// إعادة تشغيل الفيديو من السلايدر
+window.reopenVideo = function() {
+    clearInterval(slideInterval);
+    
+    const slider = document.getElementById('intro-slider');
+    if(slider) slider.style.display = 'none';
+    
+    const playerContainer = document.getElementById('yt-player-container');
+    if(playerContainer) playerContainer.style.display = 'block';
+    
+    if (ytPlayer && ytPlayer.playVideo) {
+        ytPlayer.playVideo();
+    }
+    
+    // تحديث الزر ليرجع "غلق الفيديو"
+    const closeBtn = document.getElementById('close-video-btn');
+    if(closeBtn) {
+        closeBtn.innerHTML = '<i class="fa-solid fa-circle-stop"></i> غلق الفيديو';
+        closeBtn.onclick = closeVideo;
+    }
+    
+    // تحديث شريط يُعرض الآن
+    const nowPlayingText = document.getElementById('now-playing-text');
+    if(nowPlayingText) {
+        const titleElem = document.getElementById('info-title');
+        nowPlayingText.innerText = titleElem ? titleElem.innerText : 'فيديو';
+    }
+};
+
+// استعادة الوضع عند التحميل
 document.addEventListener('DOMContentLoaded', () => {
-    // بدء السلايدر
-    startSlider();
+    // لا نبدأ السلايدر - الفيديو يعمل مباشرة
+
+    // الخط المفضل
+    const savedFont = localStorage.getItem('abqareeno_font_2026');
+    if (savedFont) {
+        changeFont(savedFont);
+    } else {
+        // افتراضي ريم الكوفي
+        document.body.classList.add('font-reem-kufi');
+    }
 
     // الوضع الداكن والفاتح
     const savedTheme = localStorage.getItem('abqareeno_theme_2026');
@@ -277,4 +427,14 @@ document.addEventListener('DOMContentLoaded', () => {
             themeIcon.classList.add('fa-sun');
         }
     }
-});         
+
+    // فتح القائمة تلقائياً على الموبايل لسهولة الوصول
+    if (window.innerWidth < 992) {
+        setTimeout(() => {
+            const container = document.querySelector('.app-container');
+            if (container && container.classList.contains('playlist-closed')) {
+                togglePlaylistCompact();
+            }
+        }, 500); // تأخير بسيط لضمان تحميل المحتوى
+    }
+});

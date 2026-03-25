@@ -6,7 +6,7 @@
     <title>مراجعة شهر مارس - منصة التفوق 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Almarai:wght@400;700;800&family=Tajawal:wght@400;500;700;800;900&family=Readex+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="theme-color" content="#8c6d46">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <body>
     <div class="background-overlay"></div>
     
-    <main class="app-container playlist-closed">
+    <main class="app-container">
         <!-- Header Section -->
         <header class="glass-panel main-header">
             <div class="logo-area">
@@ -29,9 +29,27 @@
                 </div>
             </div>
             
-            <button id="theme-toggle" class="badge-btn theme-toggle-btn" onclick="toggleTheme()" title="تبديل الإضاءة">
-                <i class="fa-solid fa-moon"></i>
-            </button>
+            <div style="display: flex; gap: 0.8rem; align-items: center;">
+            <div style="display: flex; gap: 0.6rem; align-items: center;">
+                <!-- مغير الخطوط الاحترافي -->
+                <div class="font-switcher-container">
+                    <button id="font-btn" class="font-switcher-btn" onclick="toggleFontMenu()" title="تغيير الخط">
+                        <i class="fa-solid fa-font"></i>
+                    </button>
+                    <div id="font-menu" class="font-menu glass-panel">
+                        <div class="font-option active" onclick="handleFontChange('font-reem-kufi', this)">ريم الكوفي</div>
+                        <div class="font-option" onclick="handleFontChange('font-cairo', this)">Cairo (الملك)</div>
+                        <div class="font-option" onclick="handleFontChange('font-almarai', this)">Almarai (أناقة)</div>
+                        <div class="font-option" onclick="handleFontChange('font-tajawal', this)">Tajawal (هندسي)</div>
+                        <div class="font-option" onclick="handleFontChange('font-readex-pro', this)">Readex Pro (خفيف)</div>
+                    </div>
+                </div>
+
+                <button id="theme-toggle" class="badge-btn theme-toggle-btn" onclick="toggleTheme()" title="تبديل الإضاءة">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+            </div>
         </header>
 
         <div class="content-grid">
@@ -48,12 +66,12 @@
                 <!-- دمج الفيديو ومعلوماته في صندوق زجاجي واحد لتكبير الفيديو وجعل المعلومات ملتصقة به مع فاصل -->
                 <div class="glass-panel" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
                     <div class="video-wrapper" id="video-wrapper" style="border-radius: 0; border-bottom: 2px solid rgba(140, 109, 70, 0.4);">
-                        <!-- الصورة المتحركة المبدئية (Slider Image) -->
-                        <div id="intro-slider" class="intro-slider">
+                        <!-- الصورة المتحركة المبدئية (Slider Image) - مخفية افتراضياً -->
+                        <div id="intro-slider" class="intro-slider" style="display: none;">
                             <img src="0.jpeg" class="slide active" alt="Slide 1">
                             <img src="00.jpeg" class="slide" alt="Slide 2">
                             <img src="000.jpeg" class="slide" alt="Slide 3">
-                            <img src="0000.jpeg" class="slide" alt="Slide 4">
+                            <img src="0000 (3).jpeg" class="slide" alt="Slide 4">
                             <img src="00000.jpeg" class="slide" alt="Slide 5">
                             <img src="000000.jpeg" class="slide" alt="Slide 6">
                         </div>
@@ -62,21 +80,30 @@
                         <div id="yt-player-container"></div>
                     </div>
 
-                    <div class="video-info" style="padding: 1.5rem 2rem;">
-                        <h2 class="info-title" id="info-title">جاري التحميل...</h2>
-                        <p class="info-desc" id="info-desc">اختر مادة لبدء المراجعة</p>
+                    <div class="video-info" style="padding: 1.2rem 1.5rem;">
+                        <h2 class="info-title" id="info-title">مراجعة شهر مارس - رياضيات</h2>
                         
-                        <div id="info-author" style="display:none; font-weight: bold; color: var(--vintage-dark); margin-bottom: 0.5rem;"></div>
-                        <div id="info-duration" style="display:none; font-weight: bold; color: var(--text-secondary); margin-bottom: 1rem;"></div>
+                        <div class="video-meta-row">
+                            <span id="info-author" class="meta-item"><i class="fa-solid fa-user-tie"></i> مستر / لطفي زهران - Mr / Lotfy zahran</span>
+                            <span class="meta-sep">|</span>
+                            <span id="info-duration" class="meta-item"><i class="fa-regular fa-clock"></i> 1:49:13 دقيقة</span>
+                            <span class="meta-sep">|</span>
+                            <div id="info-tags" class="tags-inline">
+                                <span class="tag-text">مراجعة شاملة</span>
+                                <span class="tag-text">محاضرات</span>
+                                <span class="tag-text">مهم جداً</span>
+                            </div>
+                        </div>
 
-                        <button id="smart-toggle-btn" class="standalone-toggle-btn" onclick="togglePlaylistCompact()" style="margin: 1.5rem 0 1rem;">
-                            <i class="fa-solid fa-layer-group"></i> <span>إظهار قائمة المواد والدروس</span>
-                        </button>
+                        <div style="margin-top: 1rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                            <!-- زر غلق الفيديو -->
+                            <button id="close-video-btn" class="close-video-btn" onclick="closeVideo()">
+                                <i class="fa-solid fa-circle-stop"></i> غلق الفيديو
+                            </button>
 
-                        <div class="tags">
-                            <span class="tag">مراجعة شاملة</span>
-                            <span class="tag">محاضرات</span>
-                            <span class="tag">مهم جداً</span>
+                            <button id="smart-toggle-btn" class="standalone-toggle-btn desktop-only-btn" onclick="togglePlaylistCompact()" style="margin: 0;">
+                                <i class="fa-solid fa-layer-group"></i> <span>المواد والدروس</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -97,56 +124,56 @@
                         <li class="subject-card" onclick="showSubject('arabic', 'اللغة العربية')">
                             <div class="subject-cover" style="background-image: url('https://img.youtube.com/vi/99dNGarcUg8/hqdefault.jpg');"></div>
                             <div class="subject-card-details">
-                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-book-open"></i> اللغة العربية</h4>
+                                <h4 style="font-weight: bold;"><i class="fa-solid fa-book-open"></i> اللغة العربية</h4>
                                 <span>4 مراجعات</span>
                             </div>
                         </li>
                         <li class="subject-card" onclick="showSubject('science', 'العلوم المتكاملة')">
                             <div class="subject-cover" style="background-image: url('https://img.youtube.com/vi/vLoGzbu-Dc4/hqdefault.jpg');"></div>
                             <div class="subject-card-details">
-                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-flask"></i> العلوم المتكاملة</h4>
+                                <h4 style="font-weight: bold;"><i class="fa-solid fa-flask"></i> العلوم المتكاملة</h4>
                                 <span>4 مراجعات</span>
                             </div>
                         </li>
                         <li class="subject-card" onclick="showSubject('history', 'التاريخ')">
                             <div class="subject-cover" style="background-image: url('https://img.youtube.com/vi/WYslbpoj7z4/hqdefault.jpg');"></div>
                             <div class="subject-card-details">
-                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-monument"></i> التاريخ</h4>
+                                <h4 style="font-weight: bold;"><i class="fa-solid fa-monument"></i> التاريخ</h4>
                                 <span>مراجعتين</span>
                             </div>
                         </li>
                         <li class="subject-card" onclick="showSubject('math', 'الرياضيات')">
                             <div class="subject-cover" style="background-image: url('https://img.youtube.com/vi/ndfYFIoJnCs/hqdefault.jpg');"></div>
                             <div class="subject-card-details">
-                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-calculator"></i> الرياضيات</h4>
+                                <h4 style="font-weight: bold;"><i class="fa-solid fa-calculator"></i> الرياضيات</h4>
                                 <span>4 مراجعات</span>
                             </div>
                         </li>
                         <li class="subject-card" onclick="showSubject('english', 'اللغة الإنجليزية')">
                             <div class="subject-cover" style="background-image: url('https://img.youtube.com/vi/QzqirrxBU1E/hqdefault.jpg');"></div>
                             <div class="subject-card-details">
-                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-language"></i> الإنجليزية</h4>
+                                <h4 style="font-weight: bold;"><i class="fa-solid fa-language"></i> الإنجليزية</h4>
                                 <span>3 مراجعات</span>
                             </div>
                         </li>
                         <li class="subject-card" onclick="showSubject('philosophy', 'الفلسفة والمنطق')">
                             <div class="subject-cover" style="background-image: url('https://img.youtube.com/vi/kx36cR3Bizk/hqdefault.jpg');"></div>
                             <div class="subject-card-details">
-                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-brain"></i> الفلسفة</h4>
+                                <h4 style="font-weight: bold;"><i class="fa-solid fa-brain"></i> الفلسفة</h4>
                                 <span>3 مراجعات</span>
                             </div>
                         </li>
                         <li class="subject-card" onclick="showSubject('tech', 'البرمجة والذكاء الاصطناعي')">
                             <div class="subject-cover" style="background-image: url('https://img.youtube.com/vi/v1d08SHRTpE/hqdefault.jpg');"></div>
                             <div class="subject-card-details">
-                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-laptop-code"></i> تكنولوجيا</h4>
+                                <h4 style="font-weight: bold;"><i class="fa-solid fa-laptop-code"></i> تكنولوجيا</h4>
                                 <span>مراجعة واحدة</span>
                             </div>
                         </li>
                         <li class="subject-card" onclick="showSubject('french', 'اللغة الفرنسية')">
                             <div class="subject-cover" style="background-image: url('1234.jpg');"></div>
                             <div class="subject-card-details">
-                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-earth-europe"></i> اللغة الفرنسية</h4>
+                                <h4 style="font-weight: bold;"><i class="fa-solid fa-earth-europe"></i> اللغة الفرنسية</h4>
                                 <span>قريباً</span>
                             </div>
                         </li>
@@ -256,6 +283,11 @@
             </aside>
         </div>
     </main>
+
+    <!-- Mobile Floating Action Button -->
+    <button class="mobile-fab-toggle" id="mobile-fab" onclick="togglePlaylistCompact()">
+        <i class="fa-solid fa-layer-group"></i> <span>المواد والدروس</span>
+    </button>
 
     <script src="script.js"></script>
 </body>

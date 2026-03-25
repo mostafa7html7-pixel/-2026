@@ -30,7 +30,7 @@
 }
 
 body {
-    font-family: 'Tajawal', sans-serif;
+    font-family: 'Reem Kufi', sans-serif;
     color: var(--text-primary);
     min-height: 100vh;
     /* خلفية الورق العتيق */
@@ -39,6 +39,103 @@ body {
     overflow-x: hidden;
     position: relative;
     direction: rtl;
+}
+
+/* Font Classes & Switcher */
+.font-reem-kufi { font-family: 'Reem Kufi', sans-serif !important; }
+.font-cairo { font-family: 'Cairo', sans-serif !important; }
+.font-almarai { font-family: 'Almarai', sans-serif !important; }
+.font-tajawal { font-family: 'Tajawal', sans-serif !important; }
+.font-readex-pro { font-family: 'Readex Pro', sans-serif !important; }
+
+.font-switcher-container {
+    position: relative;
+}
+
+.font-switcher-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #d32f2f, #b71c1c); /* Red Theme */
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 10px rgba(183, 28, 28, 0.3);
+}
+
+.font-switcher-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #ef5350, #d32f2f);
+    box-shadow: 0 6px 15px rgba(183, 28, 28, 0.4);
+}
+
+.font-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    background: rgba(255, 252, 245, 0.98);
+    border: 1.5px solid var(--vintage-dark);
+    border-radius: 12px;
+    min-width: 160px;
+    padding: 0.5rem;
+    z-index: 2000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    display: none;
+    flex-direction: column;
+    gap: 0.3rem;
+    transform-origin: top left;
+    animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.font-menu.show {
+    display: flex;
+}
+
+.font-option {
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+    text-align: right;
+}
+
+.font-option:hover {
+    background: rgba(140, 109, 70, 0.15);
+    color: var(--vintage-dark);
+    transform: translateX(-5px);
+}
+
+.font-option.active {
+    background: var(--vintage-dark);
+    color: white;
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9) translateY(-10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+body.dark-theme .font-menu {
+    background: rgba(30, 25, 20, 0.98);
+    border-color: #ffd700;
+}
+body.dark-theme .font-option {
+    color: #eee;
+}
+body.dark-theme .font-option:hover {
+    background: rgba(255, 215, 0, 0.1);
+    color: #ffd700;
+}
+body.dark-theme .font-option.active {
+    background: #ffd700;
+    color: #000;
 }
 
 /* Overlay Removal since it is no longer used for drawer */
@@ -60,14 +157,14 @@ body {
 .app-container {
     max-width: 1600px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1.2rem;
     position: relative;
     z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.2rem;
     min-height: 100vh;
-    overscroll-behavior-y: contain; /* Native app feel */
+    overscroll-behavior-y: contain;
 }
 
 /* =========================================
@@ -75,8 +172,8 @@ body {
    ========================================= */
 .glass-panel {
     background: rgba(252, 248, 238, 0.95);
-    border: 2px solid rgba(130, 95, 60, 0.5);
-    border-radius: 20px;
+    border: 1.5px solid rgba(130, 95, 60, 0.5);
+    border-radius: 16px;
     box-shadow: var(--glass-shadow);
     transition: var(--transition-smooth);
 }
@@ -92,24 +189,23 @@ body {
 .now-playing-bar {
     background: rgba(20, 20, 20, 0.9);
     color: #fff;
-    padding: 0.4rem 1rem; /* أصغر كما طلب */
-    border-radius: 8px; /* دائري وأصغر */
-    font-size: 0.85rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    /* تأثير النيون السماوي */
+    gap: 0.5rem;
     border: 1px solid #00fff2;
-    box-shadow: 0 0 10px rgba(0, 255, 242, 0.5), inset 0 0 8px rgba(0, 255, 242, 0.2);
-    text-shadow: 0 0 4px rgba(0, 255, 242, 0.7);
-    margin-bottom: 0.5rem;
+    box-shadow: 0 0 8px rgba(0, 255, 242, 0.4), inset 0 0 6px rgba(0, 255, 242, 0.15);
+    text-shadow: 0 0 3px rgba(0, 255, 242, 0.6);
+    margin-bottom: 0.4rem;
 }
 
 .now-playing-bar strong {
-    font-family: 'Tajawal', sans-serif;
-    font-size: 0.95rem;
-    letter-spacing: 0.5px;
-    color: #00fff2; /* نيون سماوي */
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.3px;
+    color: #00fff2;
 }
 
 .pulse-icon {
@@ -130,58 +226,57 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 2rem;
+    padding: 0.4rem 1rem; /* Much smaller */
     animation: slideDown 0.8s ease-out;
 }
 
 .logo-area {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 }
 
 .header-icon-wrapper {
     background: linear-gradient(135deg, var(--vintage-dark), #8f6a42);
-    width: 60px;
-    height: 60px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .header-icon-wrapper i {
     color: white;
-    font-size: 2rem;
+    font-size: 1rem;
 }
 
 .logo-title {
     margin: 0;
-    font-size: 2.5rem; /* حجم مناسب في الكمبيوتر */
+    font-size: 1.2rem; /* Compact */
     background: linear-gradient(90deg, var(--vintage-dark), #a87b4b);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
 }
 
 .logo-subtitle {
-    margin: 5px 0 0 0;
-    font-size: 1.2rem;
-    font-weight: bold;
-    opacity: 0.9;
+    margin: 1px 0 0 0;
+    font-size: 0.7rem; /* Compact */
+    font-weight: 600;
+    opacity: 0.8;
     color: var(--text-secondary);
 }
 
 .theme-toggle-btn {
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
+    font-size: 1rem;
     flex-shrink: 0;
 }
 
@@ -190,7 +285,7 @@ body {
    ========================================= */
 .content-grid {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     flex: 1;
     align-items: start;
     animation: fadeIn 1s ease-out 0.3s backwards;
@@ -202,34 +297,33 @@ body {
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 0.8rem;
 }
 
 .standalone-toggle-btn {
     width: auto;
-    min-width: 250px;
-    padding: 1.2rem 2rem;
-    background: linear-gradient(135deg, var(--vintage-dark), #6e5436);
+    padding: 0.6rem 1.4rem; /* Smaller, professional */
+    background: linear-gradient(135deg, #d32f2f 0%, #a52a2a 40%, #8c6d46 100%);
     color: white;
-    border-radius: 50px;
-    border: 2px solid rgba(255, 215, 0, 0.4);
+    border-radius: 18px; /* Square-ish rounded */
+    border: 2.5px solid rgba(255, 215, 0, 0.7);
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     font-weight: 800;
-    font-family: 'Tajawal', sans-serif;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    font-family: 'Reem Kufi', sans-serif;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 8px 25px rgba(183, 28, 28, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    margin: 1.5rem auto;
+    gap: 8px;
     position: relative;
     overflow: hidden;
     z-index: 10;
+    animation: fabPulse 2s infinite ease-in-out;
 }
 .standalone-toggle-btn i {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
 }
 .standalone-toggle-btn:hover {
     transform: translateY(-3px);
@@ -238,9 +332,21 @@ body {
     background: linear-gradient(135deg, #8f6a42, var(--vintage-dark));
 }
 
+/* Hide on mobile - FAB is used instead */
+.desktop-only-btn {
+    display: flex;
+}
+@media (max-width: 900px) {
+    .desktop-only-btn {
+        display: none !important;
+    }
+}
+
+/* Dark theme button kept consistent with Red-Gold for elite look */
 body.dark-theme .standalone-toggle-btn {
-    background: linear-gradient(135deg, #443, #221);
-    color: #ffd700;
+    background: linear-gradient(135deg, #d32f2f, #a52a2a, #8c6d46);
+    color: white;
+    border-color: rgba(255, 215, 0, 0.8);
 }
 
 .playlist-section {
@@ -258,6 +364,11 @@ body.dark-theme .standalone-toggle-btn {
 }
 .app-container.playlist-closed .content-grid {
     gap: 0;
+}
+
+/* Mobile Floating Toggle Button */
+.mobile-fab-toggle {
+    display: none;
 }
 
 .video-container {
@@ -319,7 +430,7 @@ body.dark-theme .standalone-toggle-btn {
 }
 
 .intro-slider h2 {
-    font-family: 'Amiri', serif;
+    font-family: 'Reem Kufi', sans-serif;
     font-size: 2rem;
     z-index: 1;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
@@ -404,36 +515,68 @@ body.dark-theme .standalone-toggle-btn {
 
 /* معلومات الفيديو */
 .video-info {
-    padding: 2rem;
+    padding: 1.2rem 1.5rem;
 }
 
 .info-title {
-    font-family: 'Amiri', serif;
-    font-size: 2.2rem;
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 1.4rem;
     color: var(--text-primary);
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .info-desc {
-    font-size: 1.2rem;
-    line-height: 1.8;
+    font-size: 0.95rem;
+    line-height: 1.6;
     color: var(--text-secondary);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.video-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 600;
+}
+
+.meta-sep {
+    opacity: 0.4;
+    color: var(--vintage-dark);
+}
+
+.tags-inline {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tag-text {
+    opacity: 0.9;
+    font-weight: 500;
 }
 
 .tags {
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
 }
 
 .tag {
     background: rgba(212, 163, 115, 0.2);
     color: var(--vintage-dark);
-    padding: 0.5rem 1.2rem;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.9rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 0.75rem;
     border: 1px solid rgba(212, 163, 115, 0.4);
     transition: var(--transition-smooth);
     cursor: pointer;
@@ -445,29 +588,65 @@ body.dark-theme .standalone-toggle-btn {
     transform: translateY(-2px);
 }
 
+/* زر غلق الفيديو الصغير */
+.close-video-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0.35rem 0.9rem;
+    background: rgba(180, 60, 60, 0.12);
+    color: #b43c3c;
+    border: 1px solid rgba(180, 60, 60, 0.3);
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-family: 'Reem Kufi', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 0.8rem;
+}
+.close-video-btn:hover {
+    background: rgba(180, 60, 60, 0.25);
+    border-color: #b43c3c;
+    transform: scale(1.03);
+}
+.close-video-btn i {
+    font-size: 0.85rem;
+}
+
+body.dark-theme .close-video-btn {
+    background: rgba(255, 100, 100, 0.1);
+    color: #ff8888;
+    border-color: rgba(255, 100, 100, 0.3);
+}
+body.dark-theme .close-video-btn:hover {
+    background: rgba(255, 100, 100, 0.2);
+}
+
 /* =========================================
    القائمة الجانبية (Playlist)
    ========================================= */
 .playlist-container {
-    padding: 1rem;
-    max-height: 650px;
+    padding: 0.6rem;
+    max-height: 600px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
 }
 
 .playlist-header {
-    background: rgba(255, 255, 255, 0.6);
-    padding: 0.8rem 1.2rem;
-    border-radius: 12px;
-    border: 1px solid rgba(130, 95, 60, 0.3);
+    background: rgba(255, 255, 255, 0.9); /* More solid for readability */
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    border: 1.5px solid var(--vintage-dark); /* Stronger border */
     display: flex;
-    flex-direction: row; /* أفقي: العنوان وزر العودة جنب بعض */
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: 0.5rem;
+    gap: 0.4rem;
     margin-bottom: 0.8rem;
     position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .playlist-header::before {
@@ -488,9 +667,10 @@ body.dark-theme .standalone-toggle-btn {
 }
 
 .playlist-header h3 {
-    font-family: 'Amiri', serif;
-    font-size: 1.6rem;
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 1.25rem; /* Larger */
     color: var(--vintage-dark);
+    font-weight: 700;
 }
 
 .badge {
@@ -505,14 +685,14 @@ body.dark-theme .standalone-toggle-btn {
 .badge-btn {
     background: linear-gradient(135deg, var(--vintage-dark), #5a4024);
     color: var(--vintage-base);
-    padding: 0.5rem 1rem;
-    border-radius: 12px;
-    font-size: 0.95rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 10px;
+    font-size: 0.8rem;
     font-weight: bold;
     border: none;
     cursor: pointer;
     transition: var(--transition-smooth);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
 }
 
 .badge-btn:hover {
@@ -525,12 +705,12 @@ body.dark-theme .standalone-toggle-btn {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem; /* مسافة بسيطة */
+    gap: 0.5rem;
     overflow-y: auto;
-    padding-right: 0.5rem;
-    padding-bottom: 0.5rem;
-    flex: 1; /* يأخذ بقية المساحة المتاحة */
-    min-height: 0; /* ضروري لعمل شريط التمرير بشكل صحيح داخل flex */
+    padding-right: 0.3rem;
+    padding-bottom: 0.3rem;
+    flex: 1;
+    min-height: 0;
 }
 
 .lesson-list::-webkit-scrollbar {
@@ -545,43 +725,43 @@ body.dark-theme .standalone-toggle-btn {
     border-radius: 10px;
 }
 
-/* بطاقات المواد النخبوية الأفقية 2026 (Elite Horizontal Modules) */
+/* بطاقات المواد (Compact Subject Cards) */
 .subject-card {
     display: flex;
     flex-direction: row;
     align-items: stretch;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.9); /* Solid background */
     border: 2px solid rgba(130, 95, 60, 0.4);
-    border-radius: 18px;
+    border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    margin-bottom: 0.8rem;
-    min-height: 80px;
-    will-change: transform; /* Boost performance */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 0.6rem;
+    min-height: 70px;
+    will-change: transform;
 }
 
 .subject-card:hover {
-    transform: scale(1.05) translateX(-5px);
+    transform: scale(1.03) translateX(-3px);
     border-color: #00fff2;
-    box-shadow: 0 12px 30px rgba(0, 255, 242, 0.25);
+    box-shadow: 0 8px 20px rgba(0, 255, 242, 0.2);
     z-index: 10;
 }
 
 .subject-cover {
-    width: 130px; /* عرض ثابت للصورة الجانبية */
+    width: 100px;
     aspect-ratio: 16 / 9;
-    background-size: cover; 
+    background-size: cover;
     background-position: center;
     background-color: #000;
     flex-shrink: 0;
-    border-left: 2px solid rgba(130, 95, 60, 0.3); /* فاصل أنيق */
+    border-left: 1.5px solid rgba(130, 95, 60, 0.25);
 }
 
 .subject-card-details {
-    padding: 0.8rem 1rem;
+    padding: 0.5rem 0.7rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -589,16 +769,21 @@ body.dark-theme .standalone-toggle-btn {
     background: rgba(255, 252, 245, 0.95);
 }
 
+body.dark-theme .subject-card {
+    background: rgba(30, 25, 15, 0.95);
+    border-color: rgba(212, 163, 115, 0.4);
+}
+
 body.dark-theme .subject-card-details {
-    background: rgba(30, 22, 12, 0.95);
+    background: rgba(40, 30, 15, 0.95);
 }
 
 .subject-card-details h4 {
     margin: 0;
-    font-size: 1.05rem;
+    font-size: 1rem; /* Much larger */
     color: var(--text-primary);
     font-weight: 800;
-    line-height: 1.3;
+    line-height: 1.2;
 }
 
 body.dark-theme .subject-card-details h4 {
@@ -606,45 +791,42 @@ body.dark-theme .subject-card-details h4 {
 }
 
 .subject-card-details span {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text-secondary);
-    margin-top: 4px;
+    margin-top: 3px;
     font-weight: 600;
-    opacity: 0.8;
+    opacity: 1; /* More visible */
 }
 
-/* تحسين مظهر الدروس الفردية داخل المادة (2026 Pro) */
+/* عناصر الفيديو (Compact Video Items) */
 .lesson-item {
     display: flex;
     align-items: center;
-    padding: 0.8rem 1rem;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 15px;
-    border: 1px solid rgba(130, 95, 60, 0.3);
+    padding: 0.7rem 0.9rem;
+    background: rgba(255, 255, 255, 0.95); /* Nearly solid */
+    border-radius: 12px;
+    border: 1.5px solid rgba(130, 95, 60, 0.3);
     cursor: pointer;
     transition: var(--transition-smooth);
-    gap: 1rem;
+    gap: 0.8rem;
     width: 100%;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
 }
 .lesson-item:nth-child(even) {
-    background: rgba(240, 233, 220, 0.55);
-}
-
-.lesson-item:nth-child(even) {
-    background: rgba(240, 233, 220, 0.55);
+    background: rgba(250, 245, 235, 1);
 }
 
 .lesson-item:hover {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.85);
     border-color: var(--vintage-dark);
-    transform: translateX(-5px);
+    transform: translateX(-3px);
 }
 
 .lesson-item.active {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(212, 163, 115, 0.4));
-    border-color: var(--vintage-dark); /* تحديد واضح للعنصر النشط */
+    background: linear-gradient(135deg, #fff, var(--vintage-base));
+    border-color: var(--vintage-dark);
     border-width: 2px;
-    box-shadow: 0 4px 15px rgba(140, 109, 70, 0.15);
+    box-shadow: 0 4px 15px rgba(140, 109, 70, 0.2);
 }
 
 .lesson-item.active::before {
@@ -653,26 +835,27 @@ body.dark-theme .subject-card-details h4 {
     right: 0;
     top: 0;
     height: 100%;
-    width: 4px;
+    width: 3px;
     background: var(--vintage-dark);
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 3px 3px 0;
 }
 
 .lesson-thumb {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background: rgba(140, 109, 70, 0.1);
-    border-radius: 12px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: var(--vintage-dark);
+    flex-shrink: 0;
 }
 
 .video-item .lesson-thumb {
-    width: 64px; /* صور أصغر لتلائم القائمة الرفيعة */
-    height: 40px;
+    width: 72px;
+    height: 42px;
     background: transparent;
     padding: 0;
 }
@@ -681,8 +864,8 @@ body.dark-theme .subject-card-details h4 {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
 }
 
 .lesson-item.active .lesson-thumb {
@@ -691,14 +874,38 @@ body.dark-theme .subject-card-details h4 {
 }
 
 .lesson-details h4 {
-    font-size: 1.1rem;
+    font-size: 0.95rem; /* Larger */
     color: var(--text-primary);
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.2rem;
+    font-weight: 800;
 }
 
 .lesson-details span {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--text-secondary);
+    font-weight: 600;
+}
+
+body.dark-theme .lesson-item {
+    background: rgba(45, 35, 20, 0.95);
+    border-color: rgba(212, 163, 115, 0.25);
+}
+
+body.dark-theme .lesson-item:nth-child(even) {
+    background: rgba(35, 25, 15, 0.95);
+}
+
+body.dark-theme .lesson-details h4 {
+    color: #ffd700;
+}
+
+body.dark-theme .lesson-details span {
+    color: #bbb;
+}
+
+body.dark-theme .lesson-item.active {
+    background: linear-gradient(135deg, #443, #221);
+    border-color: #ffd700;
 }
 
 .completed-icon {
@@ -729,7 +936,7 @@ body.dark-theme .subject-card-details h4 {
 }
 
 .motivation-card p {
-    font-family: 'Amiri', serif;
+    font-family: 'Reem Kufi', sans-serif;
     font-size: 1.2rem;
     line-height: 1.6;
 }
@@ -748,28 +955,47 @@ body.dark-theme .subject-card-details h4 {
         flex-direction: column;
         gap: 1rem;
     }
+
+    .app-container {
+        padding: 1rem;
+    }
     
-    /* القائمة تظهر في "آخر الصفحة" (Flow Layout) */
+    /* القائمة تظهر بتأثير سلس (Smooth Slide-Up) */
     .playlist-section {
         position: static !important;
         width: 100% !important;
         height: auto !important;
-        transform: none !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        display: block !important;
-        margin-top: 2rem;
-        transition: none;
+        margin-top: 1rem;
+        /* Smooth transitions instead of display:none */
+        max-height: 3000px;
+        opacity: 1;
+        transform: translateY(0);
+        transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                    opacity 0.4s ease,
+                    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                    margin 0.4s ease;
+        overflow: hidden;
+        visibility: visible;
     }
 
-    /* التحكم في الإظهار والإخفاء بشكل طبيعي */
+    /* التحكم في الإخفاء بحركة سلسة */
     .app-container.playlist-closed .playlist-section {
-        display: none !important;
+        max-height: 0 !important;
+        opacity: 0 !important;
+        transform: translateY(30px) !important;
+        margin-top: 0 !important;
+        pointer-events: none;
+        visibility: hidden;
+        transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                    opacity 0.3s ease,
+                    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                    margin 0.3s ease,
+                    visibility 0s 0.45s;
     }
 
     .playlist-container {
         max-height: none !important;
-        padding: 0 !important;
+        padding: 0 0 5rem 0 !important;
         border-radius: 20px;
         overflow: visible !important;
     }
@@ -777,45 +1003,220 @@ body.dark-theme .subject-card-details h4 {
     .playlist-header {
         border-radius: 20px 20px 0 0;
         background: rgba(255, 255, 255, 0.1);
-        padding: 1.5rem;
+        padding: 1.2rem;
     }
 
     .playlist-header::before {
-        display: none; /* إيقاف مقبض السحب (Drawer Handle) */
+        display: none;
     }
 
     .standalone-toggle-btn {
         width: 100% !important;
-        margin: 1.2rem 0 !important;
+        margin: 1rem 0 !important;
+        padding: 1rem 1.5rem !important;
+        font-size: 1.05rem !important;
     }
 
     .main-header {
-        padding: 1rem;
+        padding: 0.8rem 1rem;
+        border-radius: 16px;
+    }
+
+    .header-icon-wrapper {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+    }
+    .header-icon-wrapper i {
+        font-size: 1.4rem;
+    }
+
+    .logo-title {
+        font-size: 1.15rem !important;
+        line-height: 1.3;
+    }
+    .logo-subtitle {
+        font-size: 0.75rem !important;
+        margin-top: 2px !important;
+    }
+
+    .theme-toggle-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+
+    /* Now Playing Bar mobile */
+    .now-playing-bar {
+        font-size: 0.78rem;
+        padding: 0.35rem 0.8rem;
+        border-radius: 8px;
+        margin-bottom: 0.4rem;
+    }
+    .now-playing-bar strong {
+        font-size: 0.85rem;
+    }
+
+    /* Video info mobile */
+    .video-info {
+        padding: 1rem 1.2rem !important;
+    }
+    .info-title {
+        font-size: 1.2rem !important;
+    }
+    .info-desc {
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+    }
+
+    /* Tags mobile */
+    .tags {
+        gap: 0.5rem;
+    }
+    .tag {
+        padding: 0.35rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    /* Subject cards mobile */
+    .subject-card {
+        min-height: 72px;
+        border-radius: 14px;
+        margin-bottom: 0.6rem;
+    }
+    .subject-cover {
+        width: 110px !important;
+    }
+    .subject-card-details {
+        padding: 0.6rem 0.8rem;
+    }
+    .subject-card-details h4 {
+        font-size: 0.95rem !important;
+    }
+
+    /* Lesson items mobile */
+    .lesson-item {
+        padding: 0.6rem 0.8rem;
+        border-radius: 12px;
+        gap: 0.7rem;
+    }
+    .lesson-details h4 {
+        font-size: 0.95rem;
+    }
+    .lesson-details span {
+        font-size: 0.8rem;
+    }
+
+    /* Mobile floating action button (Elite Red-Gold FAB) */
+    .mobile-fab-toggle {
+        display: flex;
+        position: fixed;
+        bottom: 25px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2000;
+        background: linear-gradient(135deg, #d32f2f 0%, #a52a2a 40%, #8c6d46 100%);
+        color: white;
+        border: 2.5px solid rgba(255, 215, 0, 0.7);
+        border-radius: 18px; /* Square-ish rounded */
+        padding: 0.85rem 2rem;
+        font-size: 1.05rem;
+        font-weight: 800;
+        font-family: 'Reem Kufi', sans-serif;
+        cursor: pointer;
+        box-shadow: 0 10px 35px rgba(183, 28, 28, 0.5);
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        animation: fabPulse 2s infinite ease-in-out, fabBounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        backdrop-filter: blur(8px);
+    }
+    
+    @keyframes fabPulse {
+        0% { box-shadow: 0 10px 35px rgba(183, 28, 28, 0.5); }
+        50% { box-shadow: 0 10px 45px rgba(255, 215, 0, 0.4), 0 0 20px rgba(183, 28, 28, 0.3); transform: translateX(-50%) scale(1.03); }
+        100% { box-shadow: 0 10px 35px rgba(183, 28, 28, 0.5); }
+    }
+    .mobile-fab-toggle:active {
+        transform: translateX(-50%) scale(0.95);
+    }
+    .mobile-fab-toggle.fab-hidden {
+        transform: translateX(-50%) translateY(100px);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    @keyframes fabBounceIn {
+        0% { transform: translateX(-50%) translateY(80px); opacity: 0; }
+        100% { transform: translateX(-50%) translateY(0); opacity: 1; }
     }
 }
 
 @media (max-width: 480px) {
+    .app-container {
+        padding: 0.6rem;
+    }
     .logo-title {
-        font-size: 1rem !important;
+        font-size: 0.95rem !important;
     }
     .logo-subtitle {
-        font-size: 0.7rem !important;
+        font-size: 0.65rem !important;
+    }
+    .main-header {
+        padding: 0.6rem 0.8rem;
+        border-radius: 14px;
+        gap: 8px;
+    }
+    .header-icon-wrapper {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+    }
+    .header-icon-wrapper i {
+        font-size: 1.2rem;
+    }
+    .logo-area {
+        gap: 8px;
+    }
+    .theme-toggle-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
     }
     .subject-card {
         flex-direction: row !important;
-        min-height: 85px;
+        min-height: 72px;
     }
     .subject-cover {
-        width: 100px !important;
+        width: 90px !important;
     }
     .subject-card-details h4 {
-        font-size: 1rem !important;
+        font-size: 0.9rem !important;
     }
     .video-container {
-        padding: 0.52rem;
+        padding: 0.4rem;
     }
     .info-title {
-        font-size: 1.1rem;
+        font-size: 1rem !important;
+    }
+    .info-desc {
+        font-size: 0.85rem !important;
+    }
+    .standalone-toggle-btn {
+        padding: 0.85rem 1.2rem !important;
+        font-size: 0.95rem !important;
+    }
+    .mobile-fab-toggle {
+        padding: 0.7rem 1.4rem;
+        font-size: 0.9rem;
+        bottom: 16px;
+    }
+    .now-playing-bar {
+        font-size: 0.72rem;
+    }
+    .now-playing-bar strong {
+        font-size: 0.78rem;
     }
 }
 
