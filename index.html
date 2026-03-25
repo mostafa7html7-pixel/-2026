@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مراجعة شهر مارس - منصة التفوق 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="theme-color" content="#8c6d46">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    
+    <main class="app-container playlist-closed">
+        <!-- Header Section -->
+        <header class="glass-panel main-header">
+            <div class="logo-area">
+                <div class="header-icon-wrapper">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                    <h1 class="logo-title">منصة عبقرينو وكيمو | 2026</h1>
+                    <p class="logo-subtitle">المراجعة النهائية لشهر مارس - الصف الأول الثانوي</p>
+                </div>
+            </div>
+            
+            <button id="theme-toggle" class="badge-btn theme-toggle-btn" onclick="toggleTheme()" title="تبديل الإضاءة">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </header>
+
+        <div class="content-grid">
+            <!-- Video Player Section -->
+            <section class="video-section">
+                <!-- شريط يعرض ما يعمل الآن بوضوح -->
+                <div class="now-playing-bar" id="now-playing-bar" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div style="display: flex; align-items: center; gap: 0.6rem; overflow: hidden; white-space: nowrap;">
+                        <i class="fa-solid fa-circle-play pulse-icon"></i> 
+                        <span style="white-space: nowrap;">يُعرض الآن:</span> <strong id="now-playing-text" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">رياضيات مستر لطفي زهران</strong>
+                    </div>
+                </div>
+
+                <!-- دمج الفيديو ومعلوماته في صندوق زجاجي واحد لتكبير الفيديو وجعل المعلومات ملتصقة به مع فاصل -->
+                <div class="glass-panel" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+                    <div class="video-wrapper" id="video-wrapper" style="border-radius: 0; border-bottom: 2px solid rgba(140, 109, 70, 0.4);">
+                        <!-- الصورة المتحركة المبدئية (Slider Image) -->
+                        <div id="intro-slider" class="intro-slider">
+                            <img src="0.jpeg" class="slide active" alt="Slide 1">
+                            <img src="00.jpeg" class="slide" alt="Slide 2">
+                            <img src="000.jpeg" class="slide" alt="Slide 3">
+                            <img src="0000.jpeg" class="slide" alt="Slide 4">
+                            <img src="00000.jpeg" class="slide" alt="Slide 5">
+                            <img src="000000.jpeg" class="slide" alt="Slide 6">
+                        </div>
+                        
+                        <!-- هنا سيتم وضع Iframe يوتيوب النيتف -->
+                        <div id="yt-player-container"></div>
+                    </div>
+
+                    <div class="video-info" style="padding: 1.5rem 2rem;">
+                        <h2 class="info-title" id="info-title">جاري التحميل...</h2>
+                        <p class="info-desc" id="info-desc">اختر مادة لبدء المراجعة</p>
+                        
+                        <div id="info-author" style="display:none; font-weight: bold; color: var(--vintage-dark); margin-bottom: 0.5rem;"></div>
+                        <div id="info-duration" style="display:none; font-weight: bold; color: var(--text-secondary); margin-bottom: 1rem;"></div>
+
+                        <button id="smart-toggle-btn" class="standalone-toggle-btn" onclick="togglePlaylistCompact()" style="margin: 1.5rem 0 1rem;">
+                            <i class="fa-solid fa-layer-group"></i> <span>إظهار قائمة المواد والدروس</span>
+                        </button>
+
+                        <div class="tags">
+                            <span class="tag">مراجعة شاملة</span>
+                            <span class="tag">محاضرات</span>
+                            <span class="tag">مهم جداً</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sidebar / Playlist Section -->
+            <aside class="playlist-section">
+                <div class="glass-panel playlist-container">
+                    <div class="playlist-header">
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <h3 id="playlist-title"><i class="fa-solid fa-list"></i> المواد الدراسية</h3>
+                        </div>
+                        <button id="back-to-subjects" class="badge-btn" style="display: none;" onclick="backToSubjects()"><i class="fa-solid fa-arrow-right"></i> عودة</button>
+                    </div>
+                    
+                    <!-- قائمة المواد -->
+                    <ul class="lesson-list" id="subjects-list" style="padding: 0.5rem; gap: 1rem;">
+                        <li class="subject-card" onclick="showSubject('arabic', 'اللغة العربية')">
+                            <div class="subject-cover" style="background-image: url('https://img.youtube.com/vi/99dNGarcUg8/hqdefault.jpg');"></div>
+                            <div class="subject-card-details">
+                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-book-open"></i> اللغة العربية</h4>
+                                <span>4 مراجعات</span>
+                            </div>
+                        </li>
+                        <li class="subject-card" onclick="showSubject('science', 'العلوم المتكاملة')">
+                            <div class="subject-cover" style="background-image: url('https://img.youtube.com/vi/vLoGzbu-Dc4/hqdefault.jpg');"></div>
+                            <div class="subject-card-details">
+                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-flask"></i> العلوم المتكاملة</h4>
+                                <span>4 مراجعات</span>
+                            </div>
+                        </li>
+                        <li class="subject-card" onclick="showSubject('history', 'التاريخ')">
+                            <div class="subject-cover" style="background-image: url('https://img.youtube.com/vi/WYslbpoj7z4/hqdefault.jpg');"></div>
+                            <div class="subject-card-details">
+                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-monument"></i> التاريخ</h4>
+                                <span>مراجعتين</span>
+                            </div>
+                        </li>
+                        <li class="subject-card" onclick="showSubject('math', 'الرياضيات')">
+                            <div class="subject-cover" style="background-image: url('https://img.youtube.com/vi/ndfYFIoJnCs/hqdefault.jpg');"></div>
+                            <div class="subject-card-details">
+                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-calculator"></i> الرياضيات</h4>
+                                <span>4 مراجعات</span>
+                            </div>
+                        </li>
+                        <li class="subject-card" onclick="showSubject('english', 'اللغة الإنجليزية')">
+                            <div class="subject-cover" style="background-image: url('https://img.youtube.com/vi/QzqirrxBU1E/hqdefault.jpg');"></div>
+                            <div class="subject-card-details">
+                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-language"></i> الإنجليزية</h4>
+                                <span>3 مراجعات</span>
+                            </div>
+                        </li>
+                        <li class="subject-card" onclick="showSubject('philosophy', 'الفلسفة والمنطق')">
+                            <div class="subject-cover" style="background-image: url('https://img.youtube.com/vi/kx36cR3Bizk/hqdefault.jpg');"></div>
+                            <div class="subject-card-details">
+                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-brain"></i> الفلسفة</h4>
+                                <span>3 مراجعات</span>
+                            </div>
+                        </li>
+                        <li class="subject-card" onclick="showSubject('tech', 'البرمجة والذكاء الاصطناعي')">
+                            <div class="subject-cover" style="background-image: url('https://img.youtube.com/vi/v1d08SHRTpE/hqdefault.jpg');"></div>
+                            <div class="subject-card-details">
+                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-laptop-code"></i> تكنولوجيا</h4>
+                                <span>مراجعة واحدة</span>
+                            </div>
+                        </li>
+                        <li class="subject-card" onclick="showSubject('french', 'اللغة الفرنسية')">
+                            <div class="subject-cover" style="background-image: url('1234.jpg');"></div>
+                            <div class="subject-card-details">
+                                <h4 style="font-family: 'Tajawal', sans-serif; font-weight: bold;"><i class="fa-solid fa-earth-europe"></i> اللغة الفرنسية</h4>
+                                <span>قريباً</span>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <!-- قائمة الفيديوهات المخفية افتراضياً بالصور المصغرة ليوتيوب -->
+                    <ul class="lesson-list" id="videos-list" style="display: none;">
+                        <!-- الرياضيات -->
+                        <li class="lesson-item video-item subject-math active" onclick="changeVideo('ndfYFIoJnCs', 'رياضيات مستر لطفي زهران', 'مراجعة شهر مارس - رياضيات', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/ndfYFIoJnCs/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>رياضيات مستر لطفي زهران</h4><span>مراجعة مارس</span></div>
+                        </li>
+                        <li class="lesson-item video-item subject-math" onclick="changeVideo('NERqPIeFX0Q', 'رياضيات محمد البقري', 'مراجعة شهر مارس - رياضيات', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/NERqPIeFX0Q/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>رياضيات محمد البقري</h4><span>مراجعة مارس</span></div>
+                        </li>
+                        <li class="lesson-item video-item subject-math" onclick="changeVideo('mREGbI2fih0', 'رياضيات مقهي الرياضيات', 'مراجعة شهر مارس - رياضيات', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/mREGbI2fih0/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>رياضيات مقهي الرياضيات</h4><span>مراجعة مارس</span></div>
+                        </li>
+                        <li class="lesson-item video-item subject-math" onclick="changeVideo('_0KA-UEuraM', 'ماث للغات', 'Math Revision for Language Schools', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/_0KA-UEuraM/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>ماث للغات</h4><span>Math Revision</span></div>
+                        </li>
+
+                        <!-- العلوم -->
+                        <li class="lesson-item video-item subject-science" onclick="changeVideo('vLoGzbu-Dc4', 'مراجعه علوم متكامله ف ساعه وربع😍', 'مراجعة شاملة للعلوم المتكاملة', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/vLoGzbu-Dc4/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>مراجعة علوم متكاملة</h4><span>ساعة وربع</span></div>
+                        </li>
+                        <li class="lesson-item video-item subject-science" onclick="changeVideo('h3554JyOrU0', 'علوم متكامله الخطه التعليمه', 'شرح وحل اهم الافكار', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/h3554JyOrU0/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>الخطة التعليمية علوم</h4><span>أهم الأفكار</span></div>
+                        </li>
+                        <li class="lesson-item video-item subject-science" onclick="changeVideo('7iRKPUJWJ0I', 'علوم متكامله دكتور محمد رمضان', 'مراجعة شهر مارس', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/7iRKPUJWJ0I/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>دكتور محمد رمضان</h4><span>علوم متكاملة</span></div>
+                        </li>
+                        <li class="lesson-item video-item subject-science" onclick="changeVideo('9qt_RG6bKP4', 'ساينس علوم للغات', 'Science Revision', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/9qt_RG6bKP4/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>ساينس علوم للغات</h4><span>Science</span></div>
+                        </li>
+
+                        <!-- اللغة العربية -->
+                        <li class="lesson-item video-item subject-arabic" onclick="changeVideo('99dNGarcUg8', 'عربي - بلاغه ونحو وادب', 'مراجعة الفروع الأساسية للغة العربية', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/99dNGarcUg8/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>عربي - بلاغه ونحو وادب</h4><span>مراجعة شاملة</span></div>
+                        </li>
+                        <li class="lesson-item video-item subject-arabic" onclick="changeVideo('ETfBHcTz2gw', 'عربي الخطه التعليميه', 'شرح وحل اهم الافكار', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/ETfBHcTz2gw/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>الخطة التعليمية عربي</h4><span>أهم الأفكار</span></div>
+                        </li>
+                        <li class="lesson-item video-item subject-arabic" onclick="changeVideo('6XLh91-zO1o', 'عربي محمد العميد ساعه الا ربع😍', 'خلاصة العربي سريعاً', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/6XLh91-zO1o/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>عربي محمد العميد</h4><span>ساعة الا ربع</span></div>
+                        </li>
+                        <li class="lesson-item video-item subject-arabic" onclick="changeVideo('j5-3tR8B0P4', 'عربي مستر يوسف محمد', 'مراجعة شهر مارس', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/j5-3tR8B0P4/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>عربي مستر يوسف محمد</h4><span>مراجعة مارس</span></div>
+                        </li>
+
+                        <!-- اللغة الإنجليزية -->
+                        <li class="lesson-item video-item subject-english" onclick="changeVideo('QzqirrxBU1E', 'انجليزي مستر شريف محمود', 'English Revision', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/QzqirrxBU1E/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>انجليزي شريف محمود</h4><span>English</span></div>
+                        </li>
+                        <li class="lesson-item video-item subject-english" onclick="changeVideo('t-4ELWiWJ9Y', 'انجليزي مستر عمرو رجب', 'English Revision', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/t-4ELWiWJ9Y/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>انجليزي عمرو رجب</h4><span>English</span></div>
+                        </li>
+                        <li class="lesson-item video-item subject-english" onclick="changeVideo('rewSALZi-YM', 'انجليزي ميس شيماء', 'English Revision', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/rewSALZi-YM/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>انجليزي ميس شيماء</h4><span>English</span></div>
+                        </li>
+
+                        <!-- التاريخ -->
+                        <li class="lesson-item video-item subject-history" onclick="changeVideo('WYslbpoj7z4', 'تاريخ مستر مهاب سلامه', 'مراجعة شهر مارس تاريخ', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/WYslbpoj7z4/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>تاريخ مستر مهاب سلامه</h4><span>تاريخ</span></div>
+                        </li>
+                        <li class="lesson-item video-item subject-history" onclick="changeVideo('RSLc-P40iwI', 'تاريخ جمعه السيد', 'مراجعة شهر مارس تاريخ', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/RSLc-P40iwI/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>تاريخ جمعه السيد</h4><span>تاريخ</span></div>
+                        </li>
+
+                        <!-- الفلسفة والمنطق -->
+                        <li class="lesson-item video-item subject-philosophy" onclick="changeVideo('kx36cR3Bizk', 'فلسفه ومنطق طه رمضان', 'مراجعة شهر مارس - فلسفة ومنطق', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/kx36cR3Bizk/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>فلسفة ومنطق طه رمضان</h4><span>فلسفة</span></div>
+                        </li>
+                        <li class="lesson-item video-item subject-philosophy" onclick="changeVideo('3uU3U0bvRh0', 'فلسفه ومنطق مستر محمد جمال', 'هنزاكر اولاين', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/3uU3U0bvRh0/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>فلسفة محمد جمال</h4><span>فلسفة</span></div>
+                        </li>
+                        <li class="lesson-item video-item subject-philosophy" onclick="changeVideo('SlnKta_umqM', 'فلسفه ومنطق ميس الي شبه دمتم سالمين 😂❤️', 'مراجعة سريعة وممتعة', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/SlnKta_umqM/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>فلسفة ومنطق ميس</h4><span>فلسفة</span></div>
+                        </li>
+
+                        <!-- البرمجة -->
+                        <li class="lesson-item video-item subject-tech" onclick="changeVideo('v1d08SHRTpE', 'مراجعة البرمجة والذكاء الاصطناعي', 'التكنولوجيا والذكاء الاصطناعي', this)">
+                            <div class="lesson-thumb"><img src="https://img.youtube.com/vi/v1d08SHRTpE/mqdefault.jpg" alt="Thumbnail"></div>
+                            <div class="lesson-details"><h4>البرمجة والذكاء الاصطناعي</h4><span>تكنولوجيا</span></div>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
